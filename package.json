@@ -1,0 +1,7 @@
+{
+	"name": "bake",
+	"version": "1.0.0",
+	"main": "index.js",
+	"author": "Romeo Van Snick <romeovs@gmail.com>",
+	"license": "MIT"
+}

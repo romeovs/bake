@@ -5,6 +5,10 @@
 	"author": "Romeo Van Snick <romeovs@gmail.com>",
 	"license": "MIT",
 	"devDependencies": {
+		"@types/sharp": "^0.31.0",
 		"esbuild": "^0.15.10"
+	},
+	"dependencies": {
+		"sharp": "^0.31.1"
 	}
 }

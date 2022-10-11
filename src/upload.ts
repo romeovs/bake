@@ -3,6 +3,9 @@ import path from "path"
 
 import aws from "aws-sdk"
 
+import { CACHE } from "./config"
+import { filename } from "./filename"
+
 import { PROJECT, S3_ENDPOINT, S3_ACCESS_KEY, S3_SECRET_KEY, S3_BUCKET, CACHE } from "./config"
 
 const s3 = new aws.S3({
@@ -12,10 +15,9 @@ const s3 = new aws.S3({
 })
 
 export async function upload(req: Request): Promise<string> {
-	const filename = `${req.key}.${req.width}.${req.format}`
-	const file = path.resolve(CACHE, filename)
-	const body = await fs.readFile(file)
-	const uri = `${PROJECT}/${filename}`
+	const fname = filename(req)
+	const body = await fs.readFile(path.resolve(CACHE, fname))
+	const uri = `${PROJECT}/${fname}`
 
 	const params = {
 		Bucket: S3_BUCKET,

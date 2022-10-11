@@ -1,16 +1,20 @@
 import process from "process"
 
+import "./dotenv"
+import { bake } from "./bake"
+import { check } from "./check"
+
 async function main() {
-	const command = process.argv[2]
+	const command = process.argv[2] ?? ""
 
 	switch (command) {
-		case "serve":
+		case "":
+			await bake()
 			return
-		case "bake":
+		case "check":
+			await check()
 			return
 	}
-
-	throw new Error(`Unknown command \`${command}\``)
 }
 
 main().catch(function (err) {

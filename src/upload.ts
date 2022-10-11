@@ -30,3 +30,21 @@ export async function upload(req: Request): Promise<string> {
 	const data = await s3.upload(params).promise()
 	return data.Location
 }
+
+export async function exists(req: Request): Promise<string> {
+	const fname = filename(req)
+	const uri = `${PROJECT}/${fname}`
+
+	const params = {
+		Bucket: S3_BUCKET,
+		Key: uri,
+	}
+
+	try {
+		await s3.headObject(params).promise()
+		return true
+	} catch (err) {
+		console.log(err)
+		return false
+	}
+}

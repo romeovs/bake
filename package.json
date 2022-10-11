@@ -3,5 +3,8 @@
 	"version": "1.0.0",
 	"main": "index.js",
 	"author": "Romeo Van Snick <romeovs@gmail.com>",
-	"license": "MIT"
+	"license": "MIT",
+	"devDependencies": {
+		"esbuild": "^0.15.10"
+	}
 }

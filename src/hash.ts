@@ -56,11 +56,3 @@ export function streamhash(strm: Readable, len = defaultLength): Promise<string>
 		strm.pipe(h)
 	})
 }
-
-/**
- * Create a hash of the content of a file.
- */
-export async function filehash(path: string, len = defaultLength): Promise<string> {
-	const strm = fs.createReadStream(path)
-	return streamhash(strm, len)
-}

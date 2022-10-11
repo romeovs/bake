@@ -6,12 +6,14 @@
 	"license": "MIT",
 	"devDependencies": {
 		"@types/base-x": "^3.0.6",
+		"@types/promise-queue": "^2.2.0",
 		"@types/sharp": "^0.31.0",
 		"esbuild": "^0.15.10"
 	},
 	"dependencies": {
 		"base-x": "^4.0.0",
 		"fast-glob": "^3.2.12",
+		"promise-queue": "^2.2.5",
 		"sharp": "^0.31.1"
 	}
 }

@@ -9,6 +9,7 @@
 		"esbuild": "^0.15.10"
 	},
 	"dependencies": {
+		"fast-glob": "^3.2.12",
 		"sharp": "^0.31.1"
 	}
 }

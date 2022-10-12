@@ -7,3 +7,6 @@ bake:
 
 check:
 	@env node dist/cmd.js check
+
+typecheck:
+	@tsc --noEmit

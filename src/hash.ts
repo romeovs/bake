@@ -4,7 +4,7 @@ import { Readable } from "stream"
 
 import base from "base-x"
 
-const defaultLength = 8
+const defaultLength = 5
 const alg = "sha1"
 const alphabet = "_-0123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz"
 const encoding = base(alphabet)

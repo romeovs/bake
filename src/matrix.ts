@@ -2,6 +2,7 @@ import glob from "fast-glob"
 import sharp from "sharp"
 
 import { IMAGES, sizes, formats } from "./config"
+import { Format } from "./format"
 import { contenthash } from "./hash"
 import { encode } from "./key"
 
@@ -14,7 +15,7 @@ export type Request = {
 	file: string
 	width: number
 	height: number
-	format: string
+	format: Format
 	key: string
 }
 

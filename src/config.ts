@@ -1,5 +1,7 @@
-import { env } from "./env"
 import path from "path"
+
+import { isFormat } from "./format"
+import { env } from "./env"
 
 export const PROJECT = env("BAKE_PROJECT")
 export const IMAGES = env("BAKE_IMAGES", "src/**/*.{jpeg,jpg}")
@@ -15,4 +17,4 @@ export const S3_ACCESS_KEY = env("S3_ACCESS_KEY")
 export const S3_SECRET_KEY = env("S3_SECRET_KEY")
 
 export const sizes = SIZES.split(",").map((str) => parseInt(str, 10))
-export const formats = FORMATS.split(",")
+export const formats = FORMATS.split(",").filter(isFormat)

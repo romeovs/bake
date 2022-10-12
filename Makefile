@@ -6,4 +6,4 @@ bake:
 	@env node dist/cmd.js
 
 check:
-	@env node dist/index.js check
+	@env node dist/cmd.js check

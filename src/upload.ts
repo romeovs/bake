@@ -3,8 +3,8 @@ import path from "path"
 
 import aws from "aws-sdk"
 
-import { CACHE } from "./config"
 import { filename } from "./filename"
+import { Request } from "./matrix"
 
 import { PROJECT, S3_ENDPOINT, S3_ACCESS_KEY, S3_SECRET_KEY, S3_BUCKET, CACHE } from "./config"
 
@@ -31,7 +31,7 @@ export async function upload(req: Request): Promise<string> {
 	return data.Location
 }
 
-export async function exists(req: Request): Promise<string> {
+export async function exists(req: Request): Promise<boolean> {
 	const fname = filename(req)
 	const uri = `${PROJECT}/${fname}`
 

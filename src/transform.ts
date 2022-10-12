@@ -5,7 +5,7 @@ import path from "path"
 import { Request } from "./matrix"
 import { filename } from "./filename"
 import { exists } from "./exists"
-import { CACHE } from "./config"
+import { CACHE, QUALITY } from "./config"
 
 export async function transform(req: Request): Promise<void> {
 	const fname = filename(req)
@@ -20,15 +20,15 @@ export async function transform(req: Request): Promise<void> {
 	img.resize({ width: req.width })
 
 	if (req.format === "jpeg") {
-		img.jpeg({ progressive: true, quality: 80 })
+		img.jpeg({ progressive: true, quality: QUALITY })
 	}
 
 	if (req.format === "webp") {
-		img.webp({ quality: 80, alphaQuality: 50 })
+		img.webp({ quality: QUALITY, alphaQuality: QUALITY })
 	}
 
 	if (req.format === "avif") {
-		img.avif({ quality: 50, effort: 8 })
+		img.avif({ quality: QUALITY - 15, effort: 8 })
 	}
 
 	const out = createWriteStream(dest)

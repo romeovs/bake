@@ -8,6 +8,8 @@
 		"@types/base-x": "^3.0.6",
 		"@types/node": "^18.8.4",
 		"@types/promise-queue": "^2.2.0",
+		"@types/react": "^18.0.21",
+		"@types/react-dom": "^18.0.6",
 		"@types/sharp": "^0.31.0",
 		"esbuild": "^0.15.10",
 		"typescript": "^4.8.4"

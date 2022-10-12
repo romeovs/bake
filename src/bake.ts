@@ -1,15 +1,13 @@
-import { createWriteStream, promises as fs } from "fs"
+import { promises as fs } from "fs"
 import path from "path"
 
-import sharp from "sharp"
 import Queue from "promise-queue"
 
 import { CACHE } from "./config"
 import { upload } from "./upload"
-import { filename } from "./filename"
-import { exists } from "./exists"
-import { matrix, Request } from "./matrix"
+import { matrix } from "./matrix"
 import { Manifest, Info } from "./manifest"
+import { transform } from "./transform"
 
 export async function bake() {
 	await initialize()
@@ -46,37 +44,4 @@ export async function bake() {
 
 async function initialize() {
 	await fs.mkdir(CACHE, { recursive: true })
-}
-
-async function transform(req: Request) {
-	const fname = filename(req)
-	const dest = path.resolve(CACHE, fname)
-
-	if (await exists(dest)) {
-		return
-	}
-
-	const img = sharp(req.file)
-
-	img.resize({ width: req.width })
-
-	if (req.format === "jpeg") {
-		img.jpeg({ progressive: true, quality: 80 })
-	}
-
-	if (req.format === "webp") {
-		img.webp({ quality: 80, alphaQuality: 50 })
-	}
-
-	if (req.format === "avif") {
-		img.avif({ quality: 50, effort: 8 })
-	}
-
-	const out = createWriteStream(dest)
-
-	await new Promise(function (resolve, reject) {
-		img.on("end", () => resolve(undefined))
-		img.on("error", (err: Error) => reject(err))
-		img.pipe(out)
-	})
 }

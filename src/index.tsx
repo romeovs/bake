@@ -38,7 +38,7 @@ export async function picture(filename: string): Promise<Picture | null> {
 		return null
 	}
 
-	const base = info[0].url.split("/").slice(0, 1).join("/")
+	const base = info[0].url.split("/").slice(0, -1).join("/").concat("/")
 
 	return {
 		key: info[0].key,

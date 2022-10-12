@@ -6,20 +6,16 @@ import { Format } from "./format"
 import { contenthash } from "./hash"
 import { encode } from "./key"
 
-export type Size = {
-	width: number
-	height: number
-}
-
 export type Request = {
 	file: string
+	hash: string
 	width: number
 	height: number
 	format: Format
 	key: string
 }
 
-export async function matrix(): Promise<Request> {
+export async function matrix(): Promise<Request[]> {
 	const files = await glob(IMAGES)
 	const res: Request[] = []
 
@@ -48,13 +44,18 @@ export async function matrix(): Promise<Request> {
 	return res
 }
 
-async function meta(file: string): Size {
+export type Dimensions = {
+	width: number
+	height: number
+}
+
+async function meta(file: string): Promise<Dimensions> {
 	const img = sharp(file)
 	const m = await img.metadata()
 	return { width: m.width ?? 1, height: m.height ?? 1 }
 }
 
-function resize(target: width, meta: Size): Size {
+function resize(target: number, meta: Dimensions): Dimensions {
 	if (meta.width < target) {
 		return { ...meta }
 	}

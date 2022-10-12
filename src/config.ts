@@ -1,8 +1,10 @@
 import { env } from "./env"
+import path from "path"
 
 export const PROJECT = env("BAKE_PROJECT")
 export const IMAGES = env("BAKE_IMAGES", "src/**/*.{jpeg,jpg}")
 export const CACHE = env("BAKE_CACHE", ".bake")
+export const ROOT = path.resolve(env("BAKE_ROOT", "."))
 
 export const SIZES = env("BAKE_SIZES", "512,1024,2048,3072,4096")
 export const FORMATS = env("BAKE_FORMATS", "jpeg,webp,avif")

@@ -1,5 +1,5 @@
 {
-	"name": "bake",
+	"name": "@romeovs/bake",
 	"version": "1.0.0",
 	"main": "dist/index.js",
 	"bin": "dist/cmd.js",

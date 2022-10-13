@@ -6,7 +6,7 @@ import aws from "aws-sdk"
 import { filename } from "./filename"
 import { Request } from "./matrix"
 
-import { PROJECT, S3_ENDPOINT, S3_ACCESS_KEY, S3_SECRET_KEY, S3_BUCKET, CACHE } from "./config"
+import { PROJECT, S3_ENDPOINT, S3_ACCESS_KEY, S3_SECRET_KEY, S3_URL_FORMAT, S3_BUCKET, CACHE } from "./config"
 
 const s3 = new aws.S3({
 	endpoint: S3_ENDPOINT,
@@ -31,7 +31,14 @@ export async function upload(req: Request): Promise<string> {
 	return data.Location
 }
 
-export async function exists(req: Request): Promise<boolean> {
+function format(req: Request): string {
+	return S3_URL_FORMAT.replace("{bucket}", S3_BUCKET)
+		.replace("{endpoint}", S3_ENDPOINT)
+		.replace("{project}", PROJECT)
+		.replace("{filename}", filename(req))
+}
+
+export async function exists(req: Request): Promise<string | null> {
 	const fname = filename(req)
 	const uri = `${PROJECT}/${fname}`
 
@@ -42,9 +49,9 @@ export async function exists(req: Request): Promise<boolean> {
 
 	try {
 		await s3.headObject(params).promise()
-		return true
+		return format(req)
 	} catch (err) {
 		console.log(err)
-		return false
+		return null
 	}
 }

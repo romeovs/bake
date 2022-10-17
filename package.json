@@ -5,6 +5,11 @@
 	"bin": "dist/cmd.js",
 	"author": "Romeo Van Snick <romeovs@gmail.com>",
 	"license": "MIT",
+	"files": [
+		"README.md",
+		"dist/index.js",
+		"dist/cmd.js"
+	],
 	"devDependencies": {
 		"@types/base-x": "^3.0.6",
 		"@types/node": "^18.8.4",

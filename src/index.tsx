@@ -51,7 +51,7 @@ type PictureProps = Picture & { sizes: string }
 
 export function Picture(props: PictureProps): React.ReactNode {
 	const { b, s, sizes, ...rest } = props
-	const info = React.useMemo(() => s.map(parse), [s])
+	const info = React.useMemo(() => s.map(parse).sort(byWidth), [s])
 
 	return (
 		<picture {...rest}>
@@ -71,7 +71,7 @@ type SourceProps = {
 const Source = React.memo(function Source(props: SourceProps) {
 	const { format, info, sizes } = props
 
-	const ims = info.filter((x) => x.format === format).sort(byWidth)
+	const ims = info.filter((x) => x.format === format)
 	const src = ims[0].url
 	const srcSet = ims.map((x) => `${x.url} ${x.width}w`).join(", ")
 

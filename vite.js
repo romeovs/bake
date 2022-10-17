@@ -1,6 +1,7 @@
 const path = require("path")
 const vite = require("vite")
 const dts = require("vite-plugin-dts")
+const hashbang = require("rollup-plugin-add-shebang")
 
 async function main() {
 	await vite.build({
@@ -37,6 +38,11 @@ async function main() {
 
 	await vite.build({
 		mode: "production",
+		plugins: [
+			hashbang({
+				include: ["dist/bake.js"],
+			}),
+		],
 		build: {
 			outDir: "dist",
 			emptyOutDir: false,

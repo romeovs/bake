@@ -6,6 +6,10 @@
 	"author": "Romeo Van Snick <romeovs@gmail.com>",
 	"license": "MIT",
 	"keywords": ["images", "build"],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/romeovs/bake"
+	},
 	"files": [
 		"README.md",
 		"dist/index.js",

@@ -1,0 +1,116 @@
+name: CI/CD
+on:
+  push:
+    branches:
+      - main
+  release:
+    types:
+      - published
+  pull_request: {}
+
+env:
+  CI: "1"
+
+jobs:
+  typecheck:
+    name: Typecheck
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install tools
+        uses: asdf-vm/actions/install@707e84f3ee349548310aeabdad0dd3bfcb9b69fa
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .node-version
+          cache: yarn
+          cache-dependency-path: yarn.lock
+      - name: Install Dependencies
+        run: yarn install --immutable --prefer-offline
+      - name: Typecheck
+        run: make graph typecheck
+
+  formatting:
+    name: Formatting
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install tools
+        uses: asdf-vm/actions/install@707e84f3ee349548310aeabdad0dd3bfcb9b69fa
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .node-version
+          registry-url: https://npm.pkg.github.com
+          cache: yarn
+          cache-dependency-path: yarn.lock
+      - name: Install Dependencies
+        run: yarn install --immutable --prefer-offline
+      - name: Check formatting
+        run: make formatting
+
+  build:
+    name: Build
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install tools
+        uses: asdf-vm/actions/install@707e84f3ee349548310aeabdad0dd3bfcb9b69fa
+      - name: Set SHORT_SHA
+        run: echo "SHORT_SHA=`git rev-parse --short HEAD`" >> $GITHUB_ENV
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .node-version
+          registry-url: https://npm.pkg.github.com
+          cache: yarn
+          cache-dependency-path: yarn.lock
+      - name: Install Dependencies
+        run: yarn install --immutable --prefer-offline
+      - name: Set version
+        if: github.event_name == 'release'
+        run: yarn version --no-git-tag-version --new-version "${GITHUB_REF:11}"
+      - name: Set pre-version
+        if: github.event_name != 'release'
+        run: yarn version --no-git-tag-version --prerelease --preid "${SHORT_SHA}"
+      - name: Build packages
+        run: make build
+      - name: Check package health
+        run: make check
+      - name: Upload packages
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+
+  publish:
+    name: Publish
+    runs-on: self-hosted
+    if: github.event_name == 'release'
+    needs:
+      - typecheck
+      - formatting
+      - build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install tools
+        uses: asdf-vm/actions/install@707e84f3ee349548310aeabdad0dd3bfcb9b69fa
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .node-version
+          registry-url: https://npm.pkg.github.com
+          cache: yarn
+          cache-dependency-path: yarn.lock
+      - name: Download packages
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: dist
+      - name: Publish package
+        working-directory: dist
+        run: yarn publish

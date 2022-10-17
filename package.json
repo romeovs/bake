@@ -5,7 +5,10 @@
 	"bin": "dist/cmd.js",
 	"author": "Romeo Van Snick <romeovs@gmail.com>",
 	"license": "MIT",
-	"keywords": ["images", "build"],
+	"keywords": [
+		"images",
+		"build"
+	],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/romeovs/bake"
@@ -30,7 +33,9 @@
 		"@types/sharp": "^0.31.0",
 		"esbuild": "^0.15.10",
 		"react": "^18.2.0",
-		"typescript": "^4.8.4"
+		"typescript": "^4.8.4",
+		"vite": "^3.1.8",
+		"vite-plugin-dts": "^1.6.6"
 	},
 	"dependencies": {
 		"aws-sdk": "^2.1231.0",

@@ -1,3 +1,5 @@
+bin = node_modules/.bin
+
 build:
 	@node vite.js
 
@@ -12,3 +14,6 @@ check:
 
 typecheck:
 	@tsc --noEmit
+
+formatting:
+	@$(bin)/prettier --check .

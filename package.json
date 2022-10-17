@@ -5,6 +5,7 @@
 	"bin": "dist/cmd.js",
 	"author": "Romeo Van Snick <romeovs@gmail.com>",
 	"license": "MIT",
+	"keywords": ["images", "build"],
 	"files": [
 		"README.md",
 		"dist/index.js",

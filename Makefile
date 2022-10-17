@@ -13,7 +13,7 @@ check:
 	@package-check
 
 typecheck:
-	@tsc --noEmit
+	@$(bin)/tsc --noEmit
 
 formatting:
 	@$(bin)/prettier --check .

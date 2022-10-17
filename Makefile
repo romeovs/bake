@@ -2,11 +2,14 @@ build:
 	@esbuild --platform=node --target=node16 --format=cjs --bundle --outfile=dist/cmd.js --external:sharp src/cmd.ts
 	@esbuild --platform=node --target=node16 --format=cjs --bundle --outfile=dist/index.js --external:sharp --external:react --jsx=automatic src/index.tsx
 
-bake:
+run.bake:
 	@env node dist/cmd.js
 
-check:
+run.check:
 	@env node dist/cmd.js check
+
+check:
+	@package-check
 
 typecheck:
 	@tsc --noEmit

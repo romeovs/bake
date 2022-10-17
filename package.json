@@ -1,8 +1,10 @@
 {
 	"name": "@romeovs/bake",
 	"version": "1.0.0",
-	"main": "dist/index.js",
-	"bin": "dist/cmd.js",
+	"main": "dist/index.cjs",
+	"module": "dist/index.mjs",
+	"types": "dist/index.mjs.d.ts",
+	"bin": "dist/bake.js",
 	"author": "Romeo Van Snick <romeovs@gmail.com>",
 	"license": "MIT",
 	"keywords": [
@@ -15,13 +17,17 @@
 	},
 	"files": [
 		"README.md",
-		"dist/index.js",
-		"dist/index.es.js",
-		"dist/cmd.js"
+		"dist/index.cjs",
+		"dist/index.cjs.map",
+		"dist/index.mjs",
+		"dist/index.mjs.map",
+		"dist/index.mjs.d.ts",
+		"dist/bake.js"
 	],
 	"exports": {
-		"import": "./dist/index.es.js",
-		"require": "./dist/index.js"
+		"import": "./dist/index.mjs",
+		"require": "./dist/index.cjs",
+		"types": "./dist/index.mjs.d.ts"
 	},
 	"devDependencies": {
 		"@skypack/package-check": "^0.2.2",

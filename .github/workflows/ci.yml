@@ -9,6 +9,7 @@ on:
   pull_request: {}
 
 env:
+  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   CI: "1"
 
 jobs:

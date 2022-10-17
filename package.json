@@ -11,6 +11,7 @@
 		"dist/cmd.js"
 	],
 	"devDependencies": {
+		"@skypack/package-check": "^0.2.2",
 		"@types/base-x": "^3.0.6",
 		"@types/node": "^18.8.4",
 		"@types/promise-queue": "^2.2.0",

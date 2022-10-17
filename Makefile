@@ -10,7 +10,7 @@ run.check:
 	@env node dist/cmd.js check
 
 check:
-	@package-check
+	@$(bin)/package-check
 
 typecheck:
 	@$(bin)/tsc --noEmit

@@ -4,10 +4,10 @@ build:
 	@node vite.js
 
 run.bake:
-	@env node dist/cmd.js
+	@env node dist/bake.js
 
 run.check:
-	@env node dist/cmd.js check
+	@env node dist/bake.js check
 
 check:
 	@$(bin)/package-check

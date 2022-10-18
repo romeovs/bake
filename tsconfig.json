@@ -9,7 +9,6 @@
 		"noEmit": true,
 		"noUnusedLocals": true,
 		"noImplicitReturns": true,
-		"incremental": true,
 		"esModuleInterop": true,
 		"module": "esnext",
 		"moduleResolution": "node",

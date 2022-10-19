@@ -2,6 +2,7 @@ import { promises as fs } from "fs"
 import path from "path"
 
 import aws from "aws-sdk"
+import { RateLimiter } from "limiter"
 
 import { filename } from "./filename"
 import { Request } from "./matrix"
@@ -12,6 +13,11 @@ const s3 = new aws.S3({
 	endpoint: S3_ENDPOINT,
 	accessKeyId: S3_ACCESS_KEY,
 	secretAccessKey: S3_SECRET_KEY,
+})
+
+const limiter = new RateLimiter({
+	tokensPerInterval: 120,
+	interval: "second",
 })
 
 export async function upload(req: Request): Promise<string> {
@@ -26,6 +32,8 @@ export async function upload(req: Request): Promise<string> {
 		ContentType: `image/${req.format}`,
 		ACL: "public-read",
 	}
+
+	await limiter.removeTokens(1)
 
 	const data = await s3.upload(params).promise()
 	return data.Location
@@ -46,6 +54,8 @@ export async function exists(req: Request): Promise<string | null> {
 		Bucket: S3_BUCKET,
 		Key: uri,
 	}
+
+	await limiter.removeTokens(1)
 
 	try {
 		await s3.headObject(params).promise()

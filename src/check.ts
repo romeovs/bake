@@ -5,9 +5,11 @@ import { exists } from "./upload"
 
 export async function check() {
 	const queue = new Queue(5, 10000)
+	console.log("Collecting images...")
 	const requests = await matrix()
 	const promises = []
 
+	console.log("Checking S3...")
 	for (const request of requests) {
 		const promise = queue.add(async function () {
 			const ok = await exists(request)

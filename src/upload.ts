@@ -51,7 +51,8 @@ export async function exists(req: Request): Promise<string | null> {
 		await s3.headObject(params).promise()
 		return format(req)
 	} catch (err) {
-		console.log(err)
+		// @ts-expect-error
+		console.log(uri, err.statusCode, err.code)
 		return null
 	}
 }

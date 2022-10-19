@@ -1,5 +1,8 @@
 bin = node_modules/.bin
 
+dev:
+	@env NODE_ENV=development node vite.js
+
 build:
 	@node vite.js
 

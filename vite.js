@@ -3,15 +3,18 @@ const vite = require("vite")
 const dts = require("vite-plugin-dts")
 const hashbang = require("rollup-plugin-add-shebang")
 
+const production = process.env.NODE_ENV !== "development"
+
 async function main() {
 	await vite.build({
 		mode: "production",
 		plugins: [
-			dts({
-				insertTypeEntry: true,
-				rollupTypes: true,
-				copyDtsFiles: false,
-			}),
+			production &&
+				dts({
+					insertTypeEntry: true,
+					rollupTypes: true,
+					copyDtsFiles: false,
+				}),
 		],
 		build: {
 			outDir: "dist",

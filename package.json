@@ -54,6 +54,7 @@
 		"base-x": "^4.0.0",
 		"dotenv": "^16.0.3",
 		"fast-glob": "^3.2.12",
+		"limiter": "^2.1.0",
 		"promise-queue": "^2.2.5",
 		"sharp": "^0.31.1"
 	}

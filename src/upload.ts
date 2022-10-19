@@ -7,7 +7,16 @@ import { RateLimiter } from "limiter"
 import { filename } from "./filename"
 import { Request } from "./matrix"
 
-import { PROJECT, S3_ENDPOINT, S3_ACCESS_KEY, S3_SECRET_KEY, S3_URL_FORMAT, S3_BUCKET, CACHE } from "./config"
+import {
+	PROJECT,
+	S3_ENDPOINT,
+	S3_ACCESS_KEY,
+	S3_SECRET_KEY,
+	S3_URL_FORMAT,
+	S3_BUCKET,
+	S3_RATE_LIMIT,
+	CACHE,
+} from "./config"
 
 const s3 = new aws.S3({
 	endpoint: S3_ENDPOINT,
@@ -16,7 +25,7 @@ const s3 = new aws.S3({
 })
 
 const limiter = new RateLimiter({
-	tokensPerInterval: 120,
+	tokensPerInterval: S3_RATE_LIMIT,
 	interval: "second",
 })
 

@@ -23,13 +23,38 @@ async function main() {
 			sourcemap: true,
 			minify: false,
 			lib: {
-				entry: "./src/index.tsx",
+				entry: "./src/index.ts",
 				formats: ["es", "cjs"],
 				fileName(format) {
 					if (format === "es") {
 						return "index.mjs"
 					} else {
 						return "index.cjs"
+					}
+				},
+			},
+			rollupOptions: {
+				external,
+			},
+		},
+	})
+
+	await vite.build({
+		mode: "production",
+		build: {
+			outDir: "dist",
+			emptyOutDir: false,
+			target: "esnext",
+			sourcemap: true,
+			minify: false,
+			lib: {
+				entry: "./src/client.tsx",
+				formats: ["es", "cjs"],
+				fileName(format) {
+					if (format === "es") {
+						return "client.mjs"
+					} else {
+						return "client.cjs"
 					}
 				},
 			},

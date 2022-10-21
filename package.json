@@ -25,9 +25,15 @@
 		"dist/bake.js"
 	],
 	"exports": {
-		"import": "./dist/index.mjs",
-		"require": "./dist/index.cjs",
-		"types": "./dist/index.mjs.d.ts"
+		".": {
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs",
+			"types": "./dist/index.mjs.d.ts"
+		},
+		"./client": {
+			"import": "./dist/client.mjs",
+			"require": "./dist/client.cjs"
+		}
 	},
 	"devDependencies": {
 		"@skypack/package-check": "^0.2.2",

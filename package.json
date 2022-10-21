@@ -22,6 +22,10 @@
 		"dist/index.mjs",
 		"dist/index.mjs.map",
 		"dist/index.mjs.d.ts",
+		"dist/client.cjs",
+		"dist/client.cjs.map",
+		"dist/client.mjs",
+		"dist/client.mjs.map",
 		"dist/bake.js"
 	],
 	"exports": {

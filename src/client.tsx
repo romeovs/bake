@@ -5,7 +5,9 @@ import { parse } from "./filename"
 import { Format } from "./format"
 import { Info } from "./manifest"
 
-type PictureProps = PictureData & { sizes: string }
+export { parse, PictureData }
+
+export type PictureProps = PictureData & { sizes: string }
 
 export function Picture(props: PictureProps): React.ReactNode {
 	const { b, s, sizes, ...rest } = props

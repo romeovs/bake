@@ -5,7 +5,7 @@ import { Info } from "./manifest"
 const base = 36
 
 export function filename(req: Request) {
-	return `${req.hash}.${req.width.toString(base)}.${req.height.toString(base)}.${req.format}`
+	return `${req.key}.${req.hash}.${req.width.toString(base)}.${req.height.toString(base)}.${req.format}`
 }
 
 export function parse(url: string): Info {

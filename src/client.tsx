@@ -9,9 +9,35 @@ export { parse, PictureData }
 
 export type PictureProps = PictureData & { sizes: string }
 
+export class Pic {
+	_width: number
+	_info: SrcInfo[]
+
+	constructor(data: PictureData) {
+		this._width = data.w
+		this._info = data.s.map(parse).sort(byWidth)
+	}
+
+	get width() {
+		return this._width
+	}
+
+	get ratio() {
+		return this._info[0].width / this._info[0].height
+	}
+
+	get height() {
+		return this._width / this.ratio
+	}
+
+	get sources(): SrcInfo[] {
+		return this._info
+	}
+}
+
 export function Picture(props: PictureProps): React.ReactNode {
-	const { s, sizes, ...rest } = props
-	const info = React.useMemo(() => s.map(parse).sort(byWidth), [s])
+	const { w, s, sizes, ...rest } = props
+	const info = React.useMemo(() => new Pic({ w, s }).sources, [w, s])
 
 	return (
 		<picture {...rest}>

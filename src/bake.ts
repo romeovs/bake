@@ -6,7 +6,7 @@ import Queue from "promise-queue"
 import { CACHE } from "./config"
 import { upload, exists } from "./upload"
 import { matrix, Request } from "./matrix"
-import { Manifest, Info } from "./manifest"
+import { Manifest, SrcInfo } from "./manifest"
 import { transform } from "./transform"
 
 export async function bake() {
@@ -25,8 +25,13 @@ export async function bake() {
 			console.log(`${request.file}\t\t${request.width}\t\t ${request.format}`)
 			const info = await go(request)
 
-			manifest[request.key] = manifest[request.key] ?? []
-			manifest[request.key].push(info)
+			manifest[request.key] = manifest[request.key] ?? {
+				width: request.originalWidth,
+				height: request.originalHeight,
+				srces: [],
+			}
+
+			manifest[request.key].srces.push(info)
 		})
 		promises.push(promise)
 	}
@@ -37,7 +42,7 @@ export async function bake() {
 	await fs.writeFile(path.resolve(CACHE, "manifest.json"), json)
 }
 
-async function go(request: Request): Promise<Info> {
+async function go(request: Request): Promise<SrcInfo> {
 	let url = await exists(request)
 	if (!url) {
 		console.log(`- ${request.file}\t\t${request.width}\t\t ${request.format}`)
@@ -45,7 +50,7 @@ async function go(request: Request): Promise<Info> {
 		url = await upload(request)
 	}
 
-	const info: Info = {
+	const info: SrcInfo = {
 		...request,
 		url,
 	}

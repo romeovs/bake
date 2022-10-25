@@ -3,14 +3,14 @@ import type { PictureData } from "."
 
 import { parse } from "./filename"
 import { Format } from "./format"
-import { Info } from "./manifest"
+import { SrcInfo } from "./manifest"
 
 export { parse, PictureData }
 
 export type PictureProps = PictureData & { sizes: string }
 
 export function Picture(props: PictureProps): React.ReactNode {
-	const { b, s, sizes, ...rest } = props
+	const { s, sizes, ...rest } = props
 	const info = React.useMemo(() => s.map(parse).sort(byWidth), [s])
 
 	return (
@@ -24,7 +24,7 @@ export function Picture(props: PictureProps): React.ReactNode {
 
 type SourceProps = {
 	format: Format
-	info: Info[]
+	info: SrcInfo[]
 	sizes: string
 }
 
@@ -46,6 +46,6 @@ const Source = React.memo(function Source(props: SourceProps) {
 	return <source type={`image/${format}`} src={src} srcSet={srcSet} sizes={sizes} />
 })
 
-function byWidth(a: Info, b: Info): number {
+function byWidth(a: SrcInfo, b: SrcInfo): number {
 	return a.width - b.width
 }

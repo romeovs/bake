@@ -4,7 +4,7 @@ import path from "path"
 import { once } from "./once"
 import { CACHE } from "./config"
 import { hash } from "./hash"
-import { Manifest, Info } from "./manifest"
+import { Manifest, PictureInfo } from "./manifest"
 
 const read = once(async function (): Promise<Manifest> {
 	const filename = path.resolve(CACHE, "manifest.json")
@@ -12,7 +12,7 @@ const read = once(async function (): Promise<Manifest> {
 	return JSON.parse(data)
 })
 
-async function get(filename: string): Promise<Info[] | null> {
+async function get(filename: string): Promise<PictureInfo | null> {
 	const manifest = await read()
 	const key = hash(filename)
 
@@ -24,22 +24,18 @@ async function get(filename: string): Promise<Info[] | null> {
 }
 
 export type PictureData = {
-	key: string
-	b: string
+	w: number
 	s: string[]
 }
 
 export async function picture(filename: string): Promise<PictureData | null> {
 	const info = await get(filename)
-	if (!info || info.length === 0) {
+	if (!info) {
 		return null
 	}
 
-	const base = info[0].url.split("/").slice(0, -1).join("/").concat("/")
-
 	return {
-		key: info[0].key,
-		b: base,
-		s: info.map((info) => info.url.replace(base, "")),
+		w: info.width,
+		s: info.srces.map((info) => info.url),
 	}
 }

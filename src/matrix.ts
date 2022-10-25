@@ -9,6 +9,8 @@ import { encode } from "./key"
 export type Request = {
 	file: string
 	hash: string
+	originalWidth: number
+	originalHeight: number
 	width: number
 	height: number
 	format: Format
@@ -34,6 +36,8 @@ export async function matrix(): Promise<Request[]> {
 						key,
 						format,
 						hash,
+						originalWidth: m.width,
+						originalHeight: m.height,
 						...resized,
 					})
 				}

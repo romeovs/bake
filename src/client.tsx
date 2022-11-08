@@ -58,12 +58,13 @@ const Source = React.memo(function Source(props: SourceProps) {
 	const { format, info, sizes } = props
 
 	const ims = info.filter((x) => x.format === format)
-	const src = ims[0].url
-	const srcSet = ims.map((x) => `${x.url} ${x.width}w`).join(", ")
 
 	if (ims.length === 0) {
 		return null
 	}
+
+	const src = ims[0]?.url
+	const srcSet = ims.map((x) => `${x.url} ${x.width}w`).join(", ")
 
 	if (format === "jpeg") {
 		return <img src={src} srcSet={srcSet} sizes={sizes} />

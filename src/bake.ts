@@ -14,15 +14,22 @@ export async function bake() {
 
 	console.log("Collecting images...")
 	const requests = await matrix()
+	const total = requests.length
+	console.log(`Found ${total} image requests!`)
 
 	const queue = new Queue(5, 10000)
 	const manifest: Manifest = {}
 	const promises = []
 
+	let idx = 0
+
 	console.log("Resizing and uploading...")
 	for (const request of requests) {
 		const promise = queue.add(async function () {
-			console.log(`${request.file}\t\t${request.width}\t\t ${request.format}`)
+			idx++
+			console.log(
+				`${idx.toString().padStart(5, " ")}/${total} ${request.file}\t\t${request.width}\t\t ${request.format}`,
+			)
 			const info = await go(request)
 
 			manifest[request.key] = manifest[request.key] ?? {
@@ -45,7 +52,6 @@ export async function bake() {
 async function go(request: Request): Promise<SrcInfo> {
 	let url = await exists(request)
 	if (!url) {
-		console.log(`- ${request.file}\t\t${request.width}\t\t ${request.format}`)
 		await transform(request)
 		url = await upload(request)
 	}

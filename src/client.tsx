@@ -64,6 +64,9 @@ const Source = React.memo(function Source(props: SourceProps) {
 	}
 
 	const src = ims[0]?.url
+	if (!src) {
+		return null
+	}
 	const srcSet = ims.map((x) => `${x.url} ${x.width}w`).join(", ")
 
 	if (format === "jpeg") {

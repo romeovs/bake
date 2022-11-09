@@ -67,11 +67,13 @@ export async function exists(req: Request): Promise<string | null> {
 	await limiter.removeTokens(1)
 
 	try {
-		await s3.headObject(params).promise()
+		const h = await s3.headObject(params).promise()
+		if (h.ContentLength === 0) {
+			return null
+		}
+
 		return format(req)
 	} catch (err) {
-		// @ts-expect-error
-		console.log(uri, err.statusCode, err.code)
 		return null
 	}
 }

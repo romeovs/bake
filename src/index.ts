@@ -2,12 +2,12 @@ import { promises as fs } from "fs"
 import path from "path"
 
 import { once } from "./once"
-import { CACHE } from "./config"
 import { hash } from "./hash"
 import { Manifest, PictureInfo } from "./manifest"
+import { env } from "./env"
 
 const read = once(async function (): Promise<Manifest> {
-	const filename = path.resolve(CACHE, "manifest.json")
+	const filename = path.resolve(env("BAKE_CACHE", ".bake"), "manifest.json")
 	const data = await fs.readFile(filename, "utf-8")
 	return JSON.parse(data)
 })

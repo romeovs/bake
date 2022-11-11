@@ -44,6 +44,8 @@ export function Picture(props: PictureProps): React.ReactNode {
 			<Source format="avif" info={info} sizes={sizes} />
 			<Source format="webp" info={info} sizes={sizes} />
 			<Source format="jpeg" info={info} sizes={sizes} />
+			<Source format="png" info={info} sizes={sizes} />
+			<Source format="gif" info={info} sizes={sizes} />
 		</picture>
 	)
 }
@@ -67,9 +69,11 @@ const Source = React.memo(function Source(props: SourceProps) {
 	if (!src) {
 		return null
 	}
+
+	const fallback = ims.length === info.length
 	const srcSet = ims.map((x) => `${x.url} ${x.width}w`).join(", ")
 
-	if (format === "jpeg" || format === "png" || format === "gif") {
+	if (fallback || format === "jpeg" || format === "png" || format === "gif") {
 		return <img src={src} srcSet={srcSet} sizes={sizes} />
 	}
 

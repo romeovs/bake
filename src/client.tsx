@@ -69,7 +69,7 @@ const Source = React.memo(function Source(props: SourceProps) {
 	}
 	const srcSet = ims.map((x) => `${x.url} ${x.width}w`).join(", ")
 
-	if (format === "jpeg" || format === "png" || format==="gif") {
+	if (format === "jpeg" || format === "png" || format === "gif") {
 		return <img src={src} srcSet={srcSet} sizes={sizes} />
 	}
 

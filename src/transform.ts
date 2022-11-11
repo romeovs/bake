@@ -15,20 +15,30 @@ export async function transform(req: Request): Promise<void> {
 		return
 	}
 
-	const img = sharp(req.file)
+	const img = sharp(req.file, { animated: true })
 
 	img.resize({ width: req.width })
 
-	if (req.format === "jpeg") {
-		img.jpeg({ progressive: true, quality: QUALITY })
-	}
+	if (!req.lossless) {
+		if (req.format === "jpeg") {
+			img.jpeg({ progressive: true, quality: QUALITY })
+		}
 
-	if (req.format === "webp") {
-		img.webp({ quality: QUALITY, alphaQuality: QUALITY })
-	}
+		if (req.format === "webp") {
+			img.webp({ quality: QUALITY, alphaQuality: QUALITY })
+		}
 
-	if (req.format === "avif") {
-		img.avif({ quality: QUALITY - 15, effort: 8 })
+		if (req.format === "avif") {
+			img.avif({ quality: QUALITY - 15, effort: 8 })
+		}
+
+		if (req.format === "png") {
+			img.png({ quality: 100 })
+		}
+
+		if (req.format === "gif") {
+			img.gif()
+		}
 	}
 
 	const out = createWriteStream(dest)

@@ -4,7 +4,7 @@ import { isFormat } from "./format"
 import { env } from "./env"
 
 export const PROJECT = env("BAKE_PROJECT")
-export const IMAGES = env("BAKE_IMAGES", "src/**/*.{jpeg,jpg}")
+export const IMAGES = env("BAKE_IMAGES", "src/**/*.{jpeg,jpg,webp,png,gif}")
 export const CACHE = env("BAKE_CACHE", ".bake")
 export const ROOT = path.resolve(env("BAKE_ROOT", "."))
 export const QUALITY = parseInt(env("BAKE_QUALITY", "80"), 10)

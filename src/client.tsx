@@ -1,65 +1,40 @@
 import * as React from "react"
-import type { PictureData } from "."
 
 import { parse } from "./filename"
 import { Format } from "./format"
-import { SrcInfo } from "./manifest"
+import { PictureInfo, SrcInfo } from "./manifest"
 
-export { parse, PictureData }
+export { parse }
 
-export type PictureProps = PictureData & { sizes: string }
-
-export class Pic {
-	_width: number
-	_info: SrcInfo[]
-
-	constructor(data: PictureData) {
-		this._width = data.w
-		this._info = data.s.map(parse).sort(byWidth)
-	}
-
-	get width() {
-		return this._width
-	}
-
-	get ratio() {
-		return this._info[0].width / this._info[0].height
-	}
-
-	get height() {
-		return this._width / this.ratio
-	}
-
-	get sources(): SrcInfo[] {
-		return this._info
-	}
+export type PictureProps = {
+	sizes: string
+	picture: PictureInfo
 }
 
 export function Picture(props: PictureProps): React.ReactNode {
-	const { w, s, sizes, ...rest } = props
-	const info = React.useMemo(() => new Pic({ w, s }).sources, [w, s])
+	const { picture, sizes, ...rest } = props
 
 	return (
 		<picture {...rest}>
-			<Source format="avif" info={info} sizes={sizes} />
-			<Source format="webp" info={info} sizes={sizes} />
-			<Source format="jpeg" info={info} sizes={sizes} />
-			<Source format="png" info={info} sizes={sizes} />
-			<Source format="gif" info={info} sizes={sizes} />
+			<Source format="avif" picture={picture} sizes={sizes} />
+			<Source format="webp" picture={picture} sizes={sizes} />
+			<Source format="jpeg" picture={picture} sizes={sizes} />
+			<Source format="png" picture={picture} sizes={sizes} />
+			<Source format="gif" picture={picture} sizes={sizes} />
 		</picture>
 	)
 }
 
 type SourceProps = {
 	format: Format
-	info: SrcInfo[]
+	picture: PictureInfo
 	sizes: string
 }
 
 const Source = React.memo(function Source(props: SourceProps) {
-	const { format, info, sizes } = props
+	const { format, picture, sizes } = props
 
-	const ims = info.filter((x) => x.format === format)
+	const ims = picture.srces.filter((x) => x.format === format)
 
 	if (ims.length === 0) {
 		return null
@@ -70,8 +45,11 @@ const Source = React.memo(function Source(props: SourceProps) {
 		return null
 	}
 
-	const fallback = ims.length === info.length
-	const srcSet = ims.map((x) => `${x.url} ${x.width}w`).join(", ")
+	const fallback = ims.length === picture.srces.length
+	const srcSet = ims
+		.sort(byWidth)
+		.map((x) => `${x.url} ${x.width}w`)
+		.join(", ")
 
 	if (fallback || format === "jpeg" || format === "png" || format === "gif") {
 		return <img src={src} srcSet={srcSet} sizes={sizes} />

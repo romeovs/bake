@@ -23,19 +23,11 @@ async function get(filename: string): Promise<PictureInfo | null> {
 	return manifest[key]
 }
 
-export type PictureData = {
-	w: number
-	s: string[]
-}
-
-export async function picture(filename: string): Promise<PictureData | null> {
+export async function picture(filename: string): Promise<PictureInfo | null> {
 	const info = await get(filename)
 	if (!info) {
 		return null
 	}
 
-	return {
-		w: info.width,
-		s: info.srces.map((info) => info.url),
-	}
+	return info
 }

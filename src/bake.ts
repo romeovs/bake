@@ -28,7 +28,13 @@ export async function bake() {
 		const promise = queue.add(async function () {
 			idx++
 			console.log(
-				`${idx.toString().padStart(5, " ")}/${total} ${request.file}\t\t${request.width}\t\t ${request.format}`,
+				[
+					`${idx.toString().padStart(5, " ")}/${total}`,
+					request.width.toString().padStart(5, " "),
+					request.format.padStart(4, " "),
+					"\t",
+					request.file,
+				].join(" "),
 			)
 			const info = await go(request)
 

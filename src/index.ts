@@ -6,6 +6,8 @@ import { hash } from "./hash"
 import { Manifest, PictureInfo } from "./manifest"
 import { env } from "./env"
 
+export { compress, decompress } from "./compress"
+
 const read = once(async function (): Promise<Manifest> {
 	const filename = path.resolve(env("BAKE_CACHE", ".bake"), "manifest.json")
 	const data = await fs.readFile(filename, "utf-8")

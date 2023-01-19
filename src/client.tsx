@@ -4,6 +4,7 @@ import { parse } from "./filename"
 import { Format } from "./format"
 import { PictureInfo, SrcInfo } from "./manifest"
 
+export { compress, decompress } from "./compress"
 export { parse }
 
 export type PictureProps = {

@@ -12,6 +12,9 @@ run.bake:
 run.check:
 	@env node dist/bake.js check
 
+run.example:
+	@$(bin)/esbuild --platform=node --bundle example/index.ts | node
+
 check:
 	@$(bin)/package-check
 

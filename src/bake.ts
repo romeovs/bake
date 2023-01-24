@@ -17,7 +17,7 @@ export async function bake() {
 	const total = requests.length
 	console.log(`Found ${total} image requests!`)
 
-	const queue = new Queue(5, 10000)
+	const queue = new Queue(5, total)
 	const manifest: Manifest = {}
 	const promises = []
 

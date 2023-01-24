@@ -4,12 +4,12 @@ import { matrix } from "./matrix"
 import { exists } from "./upload"
 
 export async function check() {
-	const queue = new Queue(5, 10000)
 	console.log("Collecting images...")
 	const requests = await matrix()
 	const total = requests.length
 	console.log(`Found ${total} image requests!`)
 	const promises = []
+	const queue = new Queue(5, total)
 
 	console.log("Checking S3...")
 

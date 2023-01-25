@@ -2,6 +2,7 @@ import Queue from "promise-queue"
 
 import { matrix } from "./matrix"
 import { exists } from "./upload"
+import { log as console } from "./log"
 
 export async function check() {
 	console.log("Collecting images...")
@@ -12,17 +13,16 @@ export async function check() {
 	const queue = new Queue(5, total)
 
 	console.log("Checking S3...")
+	const progress = console.progress(total)
 
-	let idx = 0
 	for (const request of requests) {
 		const promise = queue.add(async function () {
 			const ok = await exists(request)
-			idx++
 
-			console.log(
-				`${idx.toString().padStart(5, " ")}/${total} ${request.file}\t\t${request.width}\t\t ${request.format} ${
-					ok ? "OK" : "NOT OK"
-				}`,
+			progress.step(
+				[request.format.padEnd(4), request.width.toString().padStart(5), ok ? "    OK" : "NOT OK", request.file].join(
+					"  ",
+				),
 			)
 
 			return {

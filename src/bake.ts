@@ -8,6 +8,7 @@ import { upload, exists } from "./upload"
 import { matrix, Request } from "./matrix"
 import { Manifest, SrcInfo } from "./manifest"
 import { transform } from "./transform"
+import { log as console } from "./log"
 
 export async function bake() {
 	await initialize()
@@ -21,21 +22,12 @@ export async function bake() {
 	const manifest: Manifest = {}
 	const promises = []
 
-	let idx = 0
-
 	console.log("Resizing and uploading...")
+	const progress = console.progress(total)
+
 	for (const request of requests) {
 		const promise = queue.add(async function () {
-			idx++
-			console.log(
-				[
-					`${idx.toString().padStart(5, " ")}/${total}`,
-					request.width.toString().padStart(5, " "),
-					request.format.padStart(4, " "),
-					"\t",
-					request.file,
-				].join(" "),
-			)
+			progress.step([request.format.padEnd(4), request.width.toString().padStart(5), request.file].join("  "))
 			const info = await go(request)
 
 			manifest[request.key] = manifest[request.key] ?? {

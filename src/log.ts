@@ -27,13 +27,19 @@ export class Progress {
 		const percentage = Math.round((100 * this.current) / this.total)
 		const size = Math.log10(this.total) + 1
 
-		console.log(
-			[
-				`${percentage.toString().padStart(3, " ")}%`,
-				`${this.current.toString().padStart(size, " ")}/${this.total}`,
-				message,
-			].join("  "),
-		)
+		const max = process.stdout.columns - 1
+		const str = [
+			`${percentage.toString().padStart(3, " ")}%`,
+			`${this.current.toString().padStart(size, " ")}/${this.total}`,
+			message,
+		].join("  ")
+
+		if (str.length <= max) {
+			console.log(str)
+			return
+		}
+
+		console.log(str.substring(0, max) + "…")
 	}
 }
 

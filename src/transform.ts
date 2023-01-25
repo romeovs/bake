@@ -9,7 +9,7 @@ import { CACHE, QUALITY } from "./config"
 
 export async function transform(req: Request): Promise<void> {
 	const fname = filename(req)
-	const dest = path.resolve(CACHE, fname)
+	const dest = path.resolve(CACHE, "im", fname)
 
 	if (await exists(dest)) {
 		return

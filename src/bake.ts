@@ -66,5 +66,5 @@ async function go(request: Request): Promise<SrcInfo> {
 }
 
 async function initialize() {
-	await fs.mkdir(CACHE, { recursive: true })
+	await fs.mkdir(path.join(CACHE, "im"), { recursive: true })
 }

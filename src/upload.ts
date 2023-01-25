@@ -31,7 +31,7 @@ const limiter = new RateLimiter({
 
 export async function upload(req: Request): Promise<string> {
 	const fname = filename(req)
-	const body = await fs.readFile(path.resolve(CACHE, fname))
+	const body = await fs.readFile(path.resolve(CACHE, "im", fname))
 	const uri = `${PROJECT}/${fname}`
 
 	const params = {

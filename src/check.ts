@@ -25,6 +25,7 @@ export async function check() {
 					request.width.toString().padStart(5),
 					ok ? "    OK" : "NOT OK",
 					request.key,
+					request.hash,
 					request.file,
 				].join("  "),
 			)

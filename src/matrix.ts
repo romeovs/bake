@@ -1,7 +1,7 @@
 import glob from "fast-glob"
 import sharp from "sharp"
 
-import { IMAGES, sizes, formats } from "./config"
+import { IMAGES, QUALITY, sizes, formats } from "./config"
 import { Format, isFormat } from "./format"
 import { contenthash } from "./hash"
 import { encode } from "./key"
@@ -16,6 +16,7 @@ export type Request = {
 	format: Format
 	key: string
 	lossless: boolean
+	quality: number
 }
 
 export async function matrix(): Promise<Request[]> {
@@ -44,6 +45,7 @@ export async function matrix(): Promise<Request[]> {
 					originalWidth: m.width,
 					originalHeight: m.height,
 					...resized,
+					quality: 100,
 					lossless: true,
 				})
 
@@ -61,6 +63,7 @@ export async function matrix(): Promise<Request[]> {
 						originalWidth: m.width,
 						originalHeight: m.height,
 						...resized,
+						quality: QUALITY,
 						lossless: false,
 					})
 				}

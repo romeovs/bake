@@ -5,7 +5,9 @@ import { SrcInfo } from "./manifest"
 const base = 36
 
 export function filename(req: Request) {
-	return `${req.key}.${req.hash}.${req.width.toString(base)}.${req.height.toString(base)}.${req.format}`
+	return `${req.key}.${req.hash}.${req.width.toString(base)}.${req.height.toString(base)}.${req.quality.toString(
+		base,
+	)}.${req.format}`
 }
 
 export function parse(url: string): SrcInfo {
@@ -19,6 +21,6 @@ export function parse(url: string): SrcInfo {
 		url,
 		width: parseInt(items[2], base),
 		height: parseInt(items[3], base),
-		format: items[4] as Format,
+		format: items[5] as Format,
 	}
 }

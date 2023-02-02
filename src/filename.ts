@@ -3,6 +3,7 @@ import { Request } from "./matrix"
 import { SrcInfo } from "./manifest"
 
 const base = 36
+const separator = "."
 
 export function filename(req: Request) {
 	return [
@@ -12,13 +13,13 @@ export function filename(req: Request) {
 		req.height.toString(base),
 		req.quality.toString(base),
 		req.format,
-	].join(".")
+	].join(separator)
 }
 
 export function parse(url: string): SrcInfo {
 	const parts = url.split("/")
 	const name = parts[parts.length - 1]
-	const items = name.split(".")
+	const items = name.split(separator)
 
 	return {
 		url,

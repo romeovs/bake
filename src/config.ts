@@ -19,5 +19,8 @@ export const S3_SECRET_KEY = env("S3_SECRET_KEY")
 export const S3_URL_FORMAT = env("S3_URL_FORMAT", "https://{bucket}.{endpoint}/{project}/{filename}")
 export const S3_RATE_LIMIT = parseInt(env("S3_RATE_LIMIT", "120"), 10)
 
+console.log(env("BAKE_SKIP_UPLOAD", "0") === "1")
+export const SKIP_UPLOAD = env("BAKE_SKIP_UPLOAD", "0") === "1"
+
 export const sizes = SIZES.split(",").map((str) => parseInt(str, 10))
 export const formats = FORMATS.split(",").filter(isFormat)

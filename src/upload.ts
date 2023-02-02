@@ -16,6 +16,7 @@ import {
 	S3_BUCKET,
 	S3_RATE_LIMIT,
 	CACHE,
+	SKIP_UPLOAD,
 } from "./config"
 
 const s3 = new aws.S3({
@@ -30,6 +31,10 @@ const limiter = new RateLimiter({
 })
 
 export async function upload(req: Request): Promise<string> {
+	if (SKIP_UPLOAD) {
+		return format(req)
+	}
+
 	const fname = filename(req)
 	const body = await fs.readFile(path.resolve(CACHE, "im", fname))
 	const uri = `${PROJECT}/${fname}`
@@ -56,6 +61,10 @@ function format(req: Request): string {
 }
 
 export async function exists(req: Request): Promise<string | null> {
+	if (SKIP_UPLOAD) {
+		return null
+	}
+
 	const fname = filename(req)
 	const uri = `${PROJECT}/${fname}`
 

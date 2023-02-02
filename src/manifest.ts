@@ -7,6 +7,7 @@ export type SrcInfo = {
 	format: Format
 	width: number
 	height: number
+	quality: number
 }
 
 export type PictureInfo = {

@@ -26,7 +26,7 @@ export function parse(url: string): SrcInfo {
 		hash: items[1],
 		width: parseInt(items[2], base),
 		height: parseInt(items[3], base),
-		// quality: parseInt(items[4], base),
+		quality: parseInt(items[4], base),
 		format: items[5] as Format,
 	}
 }

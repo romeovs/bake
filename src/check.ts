@@ -20,7 +20,7 @@ export async function check() {
 			const ok = await exists(request)
 
 			progress.step(
-				[request.format.padEnd(4), request.width.toString().padStart(5), ok ? "    OK" : "NOT OK", request.file].join(
+				[request.format.padEnd(4), request.width.toString().padStart(5), ok ? "    OK" : "NOT OK", request.key, request.file].join(
 					"  ",
 				),
 			)

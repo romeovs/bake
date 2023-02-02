@@ -27,7 +27,9 @@ export async function bake() {
 
 	for (const request of requests) {
 		const promise = queue.add(async function () {
-			progress.step([request.format.padEnd(4), request.width.toString().padStart(5), request.file].join("  "))
+			progress.step(
+				[request.format.padEnd(4), request.width.toString().padStart(5), request.key, request.file].join("  "),
+			)
 			const info = await go(request)
 
 			manifest[request.key] = manifest[request.key] ?? {

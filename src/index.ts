@@ -1,5 +1,6 @@
 import { promises as fs } from "fs"
 import path from "path"
+import glob from "fast-glob"
 
 import { once } from "./once"
 import { hash } from "./hash"
@@ -34,4 +35,10 @@ export async function picture(filename: string): Promise<PictureInfo | null> {
 	}
 
 	return info
+}
+
+export async function pictures(pattern: string | string[]): Promise<PictureInfo[]> {
+	const filenames = await glob(pattern)
+	const pictures = await Promise.all(filenames.sort().map(picture))
+	return pictures.filter((x: PictureInfo | null): x is PictureInfo => Boolean(x))
 }

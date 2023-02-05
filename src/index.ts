@@ -8,6 +8,7 @@ import { env } from "./env"
 
 export { compress, decompress } from "./compress"
 export { parse } from "./filename"
+export type { PictureInfo, Manifest }
 
 const read = once(async function (): Promise<Manifest> {
 	const filename = path.resolve(env("BAKE_CACHE", ".bake"), "manifest.json")

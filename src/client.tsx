@@ -13,7 +13,7 @@ export type PictureProps = {
 	picture: PictureInfo | CompressedPictureInfo
 }
 
-export function key(picture: PictureInfo | CompressedPictureInfo) {
+export function toKey(picture: PictureInfo | CompressedPictureInfo): string {
 	if ("srces" in picture) {
 		return picture.srces[0].key
 	}

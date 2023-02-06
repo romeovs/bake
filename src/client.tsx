@@ -13,6 +13,14 @@ export type PictureProps = {
 	picture: PictureInfo | CompressedPictureInfo
 }
 
+export function key(picture: PictureInfo | CompressedPictureInfo) {
+	if ("srces" in picture) {
+		return picture.srces[0].key
+	}
+
+	return picture.s[0]
+}
+
 export function Picture(props: PictureProps): React.ReactNode {
 	const { picture, sizes, ...rest } = props
 	const pic = decompress(picture as PictureInfo)

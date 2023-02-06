@@ -19,11 +19,19 @@ export function compress(picture: PictureInfo | PictureInfo[]): CompressedPictur
 	}
 }
 
+export function decompress(compressed: PictureInfo): PictureInfo
+export function decompress(compressed: PictureInfo[]): PictureInfo[]
 export function decompress(compressed: CompressedPictureInfo): PictureInfo
 export function decompress(compressed: CompressedPictureInfo[]): PictureInfo[]
-export function decompress(compressed: CompressedPictureInfo | CompressedPictureInfo[]): PictureInfo | PictureInfo[] {
+export function decompress(
+	compressed: PictureInfo | CompressedPictureInfo | (CompressedPictureInfo | PictureInfo)[],
+): PictureInfo | PictureInfo[] {
 	if (Array.isArray(compressed)) {
-		return compressed.map((x) => decompress(x))
+		return compressed.map((x) => decompress(x as CompressedPictureInfo))
+	}
+
+	if ("width" in compressed && "srces" in compressed) {
+		return compressed
 	}
 
 	const srces = compressed.s.map(parse)

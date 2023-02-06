@@ -3,25 +3,27 @@ import * as React from "react"
 import { parse } from "./filename"
 import { Format } from "./format"
 import { PictureInfo, SrcInfo } from "./manifest"
+import { decompress, CompressedPictureInfo } from "./compress"
 
 export { compress, decompress } from "./compress"
 export { parse }
 
 export type PictureProps = {
 	sizes: string
-	picture: PictureInfo
+	picture: PictureInfo | CompressedPictureInfo
 }
 
 export function Picture(props: PictureProps): React.ReactNode {
 	const { picture, sizes, ...rest } = props
+	const pic = decompress(picture as PictureInfo)
 
 	return (
 		<picture {...rest}>
-			<Source format="avif" picture={picture} sizes={sizes} />
-			<Source format="webp" picture={picture} sizes={sizes} />
-			<Source format="jpeg" picture={picture} sizes={sizes} />
-			<Source format="png" picture={picture} sizes={sizes} />
-			<Source format="gif" picture={picture} sizes={sizes} />
+			<Source format="avif" picture={pic} sizes={sizes} />
+			<Source format="webp" picture={pic} sizes={sizes} />
+			<Source format="jpeg" picture={pic} sizes={sizes} />
+			<Source format="png" picture={pic} sizes={sizes} />
+			<Source format="gif" picture={pic} sizes={sizes} />
 		</picture>
 	)
 }

@@ -1,5 +1,6 @@
 import { promises as fs } from "fs"
 import path from "path"
+import { HttpsAgent } from "agentkeepalive"
 
 import aws from "aws-sdk"
 import { RateLimiter } from "limiter"
@@ -17,12 +18,21 @@ import {
 	S3_RATE_LIMIT,
 	CACHE,
 	SKIP_UPLOAD,
+	MAX_SOCKETS,
 } from "./config"
+
+const agent = new HttpsAgent({
+	keepAlive: true,
+	maxSockets: MAX_SOCKETS,
+})
 
 const s3 = new aws.S3({
 	endpoint: S3_ENDPOINT,
 	accessKeyId: S3_ACCESS_KEY,
 	secretAccessKey: S3_SECRET_KEY,
+	httpOptions: {
+		agent,
+	},
 })
 
 const limiter = new RateLimiter({

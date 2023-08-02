@@ -17,6 +17,7 @@ export const S3_BUCKET = env("S3_BUCKET")
 export const S3_ACCESS_KEY = env("S3_ACCESS_KEY")
 export const S3_SECRET_KEY = env("S3_SECRET_KEY")
 export const S3_URL_FORMAT = env("S3_URL_FORMAT", "https://{bucket}.{endpoint}/{project}/{filename}")
+export const CDN_URL_FORMAT = env("CDN_URL_FORMAT", null)
 export const S3_RATE_LIMIT = parseInt(env("S3_RATE_LIMIT", "120"), 10)
 export const MAX_SOCKETS = parseInt(env("MAX_SOCKETS", "100"), 10)
 

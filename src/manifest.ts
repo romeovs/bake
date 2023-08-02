@@ -4,6 +4,7 @@ export type SrcInfo = {
 	key: string
 	hash: string
 	url: string
+	cdn: string | undefined
 	format: Format
 	width: number
 	height: number

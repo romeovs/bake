@@ -9,6 +9,7 @@ import { matrix, Request } from "./matrix"
 import { Manifest, SrcInfo } from "./manifest"
 import { transform } from "./transform"
 import { log as console } from "./log"
+import { cdn } from "./cdn"
 
 export async function bake() {
 	await initialize()
@@ -26,7 +27,7 @@ export async function bake() {
 	const progress = console.progress(total)
 
 	for (const request of requests) {
-		const promise = queue.add(async function () {
+		const promise = queue.add(async function() {
 			progress.step(
 				[request.format.padEnd(4), request.width.toString().padStart(5), request.key, request.hash, request.file].join(
 					"  ",
@@ -58,9 +59,11 @@ async function go(request: Request): Promise<SrcInfo> {
 		url = await upload(request)
 	}
 
+
 	const info: SrcInfo = {
 		...request,
 		url,
+		cdn: cdn(request),
 	}
 
 	// @ts-expect-error

@@ -22,7 +22,7 @@ export function compress(
 
 	return {
 		w: picture.width,
-		s: picture.srces.map((x) => x.url),
+		s: picture.srces.map((x) => x.cdn ?? x.url),
 	}
 }
 

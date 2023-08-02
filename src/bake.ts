@@ -27,7 +27,7 @@ export async function bake() {
 	const progress = console.progress(total)
 
 	for (const request of requests) {
-		const promise = queue.add(async function() {
+		const promise = queue.add(async function () {
 			progress.step(
 				[request.format.padEnd(4), request.width.toString().padStart(5), request.key, request.hash, request.file].join(
 					"  ",
@@ -58,7 +58,6 @@ async function go(request: Request): Promise<SrcInfo> {
 		await transform(request)
 		url = await upload(request)
 	}
-
 
 	const info: SrcInfo = {
 		...request,

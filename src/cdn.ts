@@ -1,11 +1,6 @@
 import { Request } from "./matrix"
 import { filename } from "./filename"
-import {
-	PROJECT,
-	S3_ENDPOINT,
-	S3_BUCKET,
-	CDN_URL_FORMAT,
-} from "./config"
+import { PROJECT, S3_ENDPOINT, S3_BUCKET, CDN_URL_FORMAT } from "./config"
 
 export function cdn(req: Request): string | undefined {
 	if (!CDN_URL_FORMAT) {

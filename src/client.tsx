@@ -51,7 +51,7 @@ const Source = React.memo(function Source(props: SourceProps) {
 		return null
 	}
 
-	const src = ims[0]?.url
+	const src = ims[0]?.cdn ?? ims[0]?.url
 	if (!src) {
 		return null
 	}
@@ -59,7 +59,7 @@ const Source = React.memo(function Source(props: SourceProps) {
 	const fallback = ims.length === picture.srces.length
 	const srcSet = ims
 		.sort(byWidth)
-		.map((x) => `${x.url} ${x.width}w`)
+		.map((x) => `${x.cdn ?? x.url} ${x.width}w`)
 		.join(", ")
 
 	if (fallback || format === "jpeg" || format === "png" || format === "gif") {

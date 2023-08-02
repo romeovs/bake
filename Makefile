@@ -21,5 +21,8 @@ check:
 typecheck:
 	@$(bin)/tsc --noEmit
 
+format:
+	@$(bin)/prettier --write .
+
 formatting:
 	@$(bin)/prettier --check .
